@@ -35,6 +35,9 @@ import android.widget.TextView
 class JoystickKeyService : AccessibilityService() {
 
     companion object {
+        /** True while the system has this service connected (it runs in the app's process). */
+        @Volatile var running = false
+            private set
         private const val SKIP_REPEAT_MS = 350L
         private const val CHATTER_MS = 120L
         private const val OSD_MS = 2_000L
@@ -89,6 +92,7 @@ class JoystickKeyService : AccessibilityService() {
     }
 
     override fun onServiceConnected() {
+        running = true
         A11yBootstrap.ensureEnabled(this)
         serviceInfo = (serviceInfo ?: AccessibilityServiceInfo()).apply {
             flags = flags or AccessibilityServiceInfo.FLAG_REQUEST_FILTER_KEY_EVENTS
@@ -99,6 +103,7 @@ class JoystickKeyService : AccessibilityService() {
     override fun onInterrupt() {}
 
     override fun onUnbind(intent: Intent?): Boolean {
+        running = false
         removeOsd()
         return super.onUnbind(intent)
     }

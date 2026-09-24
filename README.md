@@ -60,7 +60,7 @@ key presses.
 If only one of JoyBook / [JoyAmp](https://github.com/alexbeatnik/JoyAmp) has its joystick service
 enabled, that service also drives whatever the other app is playing through standard media keys
 (Left / Right = previous / next, OK = play / pause), so the stick never ends up scrolling the lock
-screen's media carousel. The player shows a warning while JoyBook's own service is off.
+screen's media carousel. The player shows a warning while JoyBook's own service is off or not actually running (it can get stuck after an update; turning it off and on fixes it, and with the permission below the app does that by itself).
 
 Some Unisoc builds drop Accessibility services after an update, and force-stopping an app always
 disables its service. JoyBook can re-enable itself if you grant it permission to write secure

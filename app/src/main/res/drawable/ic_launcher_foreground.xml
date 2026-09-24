@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Glyph fills the visible part of the adaptive icon (central 72dp of 108). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group
+        android:scaleX="1.561"
+        android:scaleY="1.561"
+        android:translateX="16.54"
+        android:translateY="15.37">
+        <path
+            android:fillColor="#FF1A1204"
+            android:pathData="M6,26 V16.5 A8,8 0 0 1 14,8.5 H34 A8,8 0 0 1 42,16.5 V26 H39 V16.5 A5,5 0 0 0 34,11.5 H14 A5,5 0 0 0 9,16.5 V26 Z" />
+        <path
+            android:fillColor="#FF1A1204"
+            android:pathData="M6.5,23 H7.5 A3,3 0 0 1 10.5,26 V34 A3,3 0 0 1 7.5,37 H6.5 A3,3 0 0 1 3.5,34 V26 A3,3 0 0 1 6.5,23 Z" />
+        <path
+            android:fillColor="#FF1A1204"
+            android:pathData="M40.5,23 H41.5 A3,3 0 0 1 44.5,26 V34 A3,3 0 0 1 41.5,37 H40.5 A3,3 0 0 1 37.5,34 V26 A3,3 0 0 1 40.5,23 Z" />
+        <path
+            android:fillColor="#FF1A1204"
+            android:fillType="evenOdd"
+            android:pathData="M15.0,13 H33.0 A2.5,2.5 0 0 1 35.5,15.5 V38.5 A2.5,2.5 0 0 1 33.0,41 H15.0 A2.5,2.5 0 0 1 12.5,38.5 V15.5 A2.5,2.5 0 0 1 15.0,13 Z M16,15.5 H17.8 V38.5 H16 Z M21,19 H31.5 V21 H21 Z M21,23.5 H28 V25.5 H21 Z" />
+    </group>
+</vector>

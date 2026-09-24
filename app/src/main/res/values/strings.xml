@@ -86,4 +86,6 @@
 
     <string name="a11y_joystick_desc">Lets the joystick control JoyBook on the lock screen: Left / Right = rewind / forward, Up / Down = next / previous chapter, Center = play / pause. Keys are intercepted only while the lock screen is showing and JoyBook has the audio; calls and alarms are never blocked.</string>
     <string name="a11y_off_warning">Lock-screen joystick is off · press # and turn it on</string>
+    <string name="a11y_stuck_warning">Lock-screen joystick is not running · turn it off and on in Accessibility</string>
+    <string name="a11y_stuck_sub">Not running · turn it off and on</string>
 </resources>
