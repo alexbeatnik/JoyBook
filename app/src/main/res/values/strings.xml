@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">JoyBook</string>
+    <string name="menu">Menu</string>
+    <string name="books">Books</string>
+    <string name="chapters">Chapters</string>
+    <string name="book_label">BOOK</string>
+
+    <string name="chapter_n">Chapter %1$d</string>
+    <string name="chapter_n_of_m">Chapter %1$d of %2$d</string>
+    <string name="named_chapter_of_m">%1$s · %2$d/%3$d</string>
+    <string name="books_n">%1$d books</string>
+    <string name="book_meta">Chapter %1$d of %2$d</string>
+    <string name="book_meta_pct">Chapter %1$d of %2$d · %3$d%%</string>
+    <string name="book_new">%1$d chapters · not started</string>
+    <string name="book_finished">%1$d chapters · finished</string>
+    <string name="percent">%1$d%%</string>
+    <string name="track_pos">%1$d / %2$d</string>
+    <string name="left_fmt">%1$s left</string>
+    <string name="left_at_speed">%1$s left at %2$s</string>
+    <string name="measuring">Measuring chapters…</string>
+    <string name="time_left">−%1$s</string>
+    <string name="hours_min">%1$d h %2$02d min</string>
+    <string name="minutes">%1$d min</string>
+    <string name="speed_x">%1$s×</string>
+
+    <string name="scanning">Scanning…</string>
+    <string name="no_folder">No books folder yet</string>
+    <string name="no_folder_hint">Press # → Books folder and pick the folder with your audiobooks (one subfolder per book)</string>
+    <string name="no_books">No audiobooks found</string>
+    <string name="no_books_hint">Each book should be a subfolder with audio files</string>
+    <string name="refreshed">Library updated: %1$d books</string>
+
+    <string name="row_books">Books</string>
+    <string name="row_chapters">Chapters</string>
+    <string name="row_speed">Playback speed</string>
+    <string name="row_speed_sub">1 / 3 on the player</string>
+    <string name="row_sleep">Sleep timer</string>
+    <string name="row_sleep_sub">0 on the player · fades out</string>
+    <string name="row_skip">Skip step</string>
+    <string name="row_skip_sub">◂ ▸ and the lock-screen stick</string>
+    <string name="row_folder">Books folder</string>
+    <string name="folder_none">Not selected</string>
+    <string name="folder_cleared">Books folder cleared</string>
+    <string name="row_refresh">Rescan books</string>
+    <string name="row_touch">Touchscreen</string>
+    <string name="touch_on">Taps work</string>
+    <string name="touch_off">Keypad only</string>
+    <string name="row_joystick">Lock-screen joystick</string>
+    <string name="row_joystick_sub">Accessibility → JoyBook</string>
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
+    <string name="sleep_off">Off</string>
+    <string name="sleep_min">%1$d min</string>
+    <string name="sleep_chapter">End of chapter</string>
+    <string name="sleep_short_chapter">ch.</string>
+    <string name="seconds">%1$d s</string>
+    <string name="sleep_set">Sleep timer: %1$s</string>
+    <string name="speed_set">Speed %1$s</string>
+    <string name="menu_hint">Player: ◂ ▸ rewind / forward (hold to keep going) · ▴ ▾ next / previous chapter · OK play / pause · 1 / 3 speed · 0 sleep timer\nLock screen: the same stick keys work\nHold OK on Books folder to clear it.</string>
+    <string name="joystick_keys_hint">Turn on JoyBook here to control the book from the lock screen</string>
+
+    <string name="hint_skip">±%1$d s</string>
+    <string name="hint_chapter">Chapter</string>
+    <string name="hint_play">Play</string>
+    <string name="hint_menu">Menu</string>
+    <string name="hint_move">Move</string>
+    <string name="hint_select">Select</string>
+    <string name="hint_open">Open</string>
+    <string name="hint_back">Back</string>
+
+    <string name="channel_name">Playback</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="rewind">Rewind</string>
+    <string name="forward">Forward</string>
+    <string name="rewind_n">Back %1$d s</string>
+    <string name="forward_n">Forward %1$d s</string>
+    <string name="prev_chapter">Previous chapter</string>
+    <string name="next_chapter">Next chapter</string>
+    <string name="close">Close</string>
+    <string name="playing">Playing</string>
+    <string name="paused">Paused</string>
+    <string name="osd_sub">%1$s  ·  %2$s</string>
+    <string name="time_of">%1$s / %2$s</string>
+
+    <string name="a11y_joystick_desc">Lets the joystick control JoyBook on the lock screen: Left / Right = rewind / forward, Up / Down = next / previous chapter, Center = play / pause. Keys are intercepted only while the lock screen is showing and JoyBook has the audio; calls and alarms are never blocked.</string>
+</resources>

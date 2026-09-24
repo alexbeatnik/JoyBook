@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_screen"
+    android:orientation="vertical"
+    android:paddingStart="10dp"
+    android:paddingTop="2dp"
+    android:paddingEnd="10dp"
+    android:paddingBottom="4dp">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="2dp"
+        android:paddingEnd="4dp">
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:background="@drawable/bg_logo"
+            android:importantForAccessibility="no"
+            android:padding="4dp"
+            android:src="@drawable/ic_headset"
+            app:tint="@color/ja_on_accent" />
+
+        <TextView
+            android:id="@+id/headerTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="9dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
+            android:singleLine="true"
+            android:text="@string/app_name"
+            android:textColor="@color/ja_text"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/speedBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_pill_off"
+            android:fontFamily="sans-serif-medium"
+            android:fontFeatureSettings="tnum"
+            android:paddingStart="7dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="7dp"
+            android:paddingBottom="2dp"
+            android:textColor="@color/ja_accent"
+            android:textSize="10sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/sleepBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/bg_pill_off"
+            android:drawablePadding="3dp"
+            android:fontFamily="sans-serif-medium"
+            android:fontFeatureSettings="tnum"
+            android:gravity="center_vertical"
+            android:paddingStart="6dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="7dp"
+            android:paddingBottom="2dp"
+            android:textColor="@color/ja_accent"
+            android:textSize="10sp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <ViewFlipper
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:inAnimation="@anim/page_in"
+        android:outAnimation="@anim/page_out">
+
+        <!-- 0: PLAYER -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/playerContent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="116dp"
+                    android:layout_height="116dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_art"
+                    android:elevation="4dp">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_book"
+                        app:tint="@color/ja_on_accent" />
+
+                    <ImageView
+                        android:id="@+id/coverImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_art_clip"
+                        android:importantForAccessibility="no"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/bookTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:lineSpacingExtra="1dp"
+                    android:maxLines="2"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="6dp"
+                    android:textColor="@color/ja_text"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/bookSub"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:textColor="@color/ja_text_2"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/chapterText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:letterSpacing="0.06"
+                    android:singleLine="true"
+                    android:textColor="@color/ja_accent"
+                    android:textSize="11sp" />
+
+                <SeekBar
+                    android:id="@+id/seekBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="18dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@null"
+                    android:focusable="false"
+                    android:maxHeight="4dp"
+                    android:minHeight="4dp"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:progressDrawable="@drawable/seek_progress"
+                    android:splitTrack="false"
+                    android:thumb="@drawable/seek_thumb"
+                    android:thumbOffset="5dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp">
+
+                    <TextView
+                        android:id="@+id/timePos"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFeatureSettings="tnum"
+                        android:textColor="@color/ja_text_2"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/timeLeft"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFeatureSettings="tnum"
+                        android:gravity="end"
+                        android:textColor="@color/ja_text_2"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/btnPrevCh"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/bg_icon_btn"
+                        android:contentDescription="@string/prev_chapter"
+                        android:padding="6dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_skip_prev"
+                        app:tint="@color/ja_text_2" />
+
+                    <FrameLayout
+                        android:id="@+id/btnBack"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_icon_btn"
+                        android:contentDescription="@string/rewind">
+
+                        <ImageView
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:layout_gravity="center"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_replay"
+                            app:tint="@color/ja_text" />
+
+                        <TextView
+                            android:id="@+id/backStep"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="3dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:textColor="@color/ja_text"
+                            android:textSize="8sp" />
+                    </FrameLayout>
+
+                    <ImageButton
+                        android:id="@+id/btnPlay"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/bg_play_btn"
+                        android:contentDescription="@string/play"
+                        android:elevation="3dp"
+                        android:padding="12dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_play"
+                        app:tint="@color/ja_on_accent" />
+
+                    <FrameLayout
+                        android:id="@+id/btnFwd"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/bg_icon_btn"
+                        android:contentDescription="@string/forward">
+
+                        <ImageView
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:layout_gravity="center"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_forward"
+                            app:tint="@color/ja_text" />
+
+                        <TextView
+                            android:id="@+id/fwdStep"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="3dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:textColor="@color/ja_text"
+                            android:textSize="8sp" />
+                    </FrameLayout>
+
+                    <ImageButton
+                        android:id="@+id/btnNextCh"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/bg_icon_btn"
+                        android:contentDescription="@string/next_chapter"
+                        android:padding="6dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_skip_next"
+                        app:tint="@color/ja_text_2" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <!-- Whole-book progress -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/bg_card"
+                    android:orientation="vertical"
+                    android:paddingStart="12dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="9dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-medium"
+                            android:letterSpacing="0.14"
+                            android:text="@string/book_label"
+                            android:textColor="@color/ja_text_3"
+                            android:textSize="9.5sp" />
+
+                        <TextView
+                            android:id="@+id/bookPercent"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-medium"
+                            android:fontFeatureSettings="tnum"
+                            android:gravity="end"
+                            android:textColor="@color/ja_text"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/bookProgress"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"
+                        android:layout_marginTop="5dp"
+                        android:max="1000"
+                        android:progressDrawable="@drawable/seek_progress" />
+
+                    <TextView
+                        android:id="@+id/bookLeft"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFeatureSettings="tnum"
+                        android:singleLine="true"
+                        android:textColor="@color/ja_text_2"
+                        android:textSize="10sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/emptyView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_setting_icon"
+                    android:importantForAccessibility="no"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_folder"
+                    app:tint="@color/ja_accent" />
+
+                <TextView
+                    android:id="@+id/emptyText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:textColor="@color/ja_text"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/emptyHint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:textColor="@color/ja_text_3"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- 1: MENU -->
+        <ScrollView
+            android:id="@+id/menuScroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="2dp">
+
+                <include
+                    android:id="@+id/rowBooks"
+                    layout="@layout/item_setting" />
+
+                <include
+                    android:id="@+id/rowChapters"
+                    layout="@layout/item_setting" />
+
+                <include
+                    android:id="@+id/rowSpeed"
+                    layout="@layout/item_setting" />
+
+                <include
+                    android:id="@+id/rowSleep"
+                    layout="@layout/item_setting" />
+
+                <include
+                    android:id="@+id/rowSkip"
+                    layout="@layout/item_setting" />
+
+                <include
+                    android:id="@+id/rowFolder"
+                    layout="@layout/item_setting" />
+
+                <include
+                    android:id="@+id/rowRefresh"
+                    layout="@layout/item_setting" />
+
+                <include
+                    android:id="@+id/rowTouch"
+                    layout="@layout/item_setting" />
+
+                <include
+                    android:id="@+id/rowJoystick"
+                    layout="@layout/item_setting" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:lineSpacingExtra="3dp"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="6dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/menu_hint"
+                    android:textColor="@color/ja_text_3"
+                    android:textSize="10sp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- 2: BOOKS -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/booksList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:descendantFocusability="blocksDescendants"
+            android:overScrollMode="never"
+            android:paddingBottom="4dp"
+            android:scrollbarSize="3dp"
+            android:scrollbarThumbVertical="@drawable/scrollbar_thumb"
+            android:scrollbars="vertical" />
+
+        <!-- 3: CHAPTERS -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chaptersList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:descendantFocusability="blocksDescendants"
+            android:overScrollMode="never"
+            android:paddingBottom="4dp"
+            android:scrollbarSize="3dp"
+            android:scrollbarThumbVertical="@drawable/scrollbar_thumb"
+            android:scrollbars="vertical" />
+    </ViewFlipper>
+
+    <!-- Key hints -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="22dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/keyA"
+            style="@style/JoyBook.Keycap" />
+
+        <TextView
+            android:id="@+id/labelA"
+            style="@style/JoyBook.KeyLabel" />
+
+        <TextView
+            android:id="@+id/keyB"
+            style="@style/JoyBook.Keycap" />
+
+        <TextView
+            android:id="@+id/labelB"
+            style="@style/JoyBook.KeyLabel" />
+
+        <TextView
+            android:id="@+id/keyC"
+            style="@style/JoyBook.Keycap" />
+
+        <TextView
+            android:id="@+id/labelC"
+            style="@style/JoyBook.KeyLabel" />
+
+        <TextView
+            android:id="@+id/keyD"
+            style="@style/JoyBook.Keycap" />
+
+        <TextView
+            android:id="@+id/labelD"
+            style="@style/JoyBook.KeyLabel"
+            android:layout_marginEnd="0dp" />
+    </LinearLayout>
+</LinearLayout>
