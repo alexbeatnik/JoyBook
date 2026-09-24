@@ -52,6 +52,7 @@ class PlaybackService : Service() {
         const val ACTION_NEXT_CHAPTER = "com.local.joybook.NEXT"
         const val ACTION_PREV_CHAPTER = "com.local.joybook.PREV"
         const val ACTION_CLOSE = "com.local.joybook.CLOSE"
+        private const val SYSTEM_UI = "com.android.systemui"
 
         val SPEEDS = floatArrayOf(0.8f, 0.9f, 1.0f, 1.1f, 1.25f, 1.5f, 1.75f, 2.0f)
         val SKIP_STEPS = intArrayOf(10, 15, 30, 60)
@@ -255,11 +256,12 @@ class PlaybackService : Service() {
         )
         session = MediaSessionCompat(this, "JoyBook").apply {
             setCallback(object : MediaSessionCompat.Callback() {
-                override fun onPlay() = play()
-                override fun onPause() = pause()
+                // On the lock screen the play/pause button only shows the state (see updatePlaybackState).
+                override fun onPlay() { if (!fromLockScreen()) play() }
+                override fun onPause() { if (!fromLockScreen()) pause() }
                 override fun onSkipToNext() = nextChapter()
                 override fun onSkipToPrevious() = prevChapter()
-                override fun onStop() = pause()
+                override fun onStop() { if (!fromLockScreen()) pause() }
                 override fun onSeekTo(pos: Long) = seekTo(pos.toInt())
                 override fun onFastForward() = skipForward()
                 override fun onRewind() = skipBack()
@@ -314,6 +316,10 @@ class PlaybackService : Service() {
     }
 
     private fun isLocked() = getSystemService(KeyguardManager::class.java)?.isKeyguardLocked == true
+
+    /** The call comes from a tap on the lock screen player (SystemUI) while the keyguard is up. */
+    private fun fromLockScreen(): Boolean =
+        lockScreenMode && session.currentControllerInfo.packageName == SYSTEM_UI
 
     private fun updateLockScreenMode(action: String?) {
         // At screen off the keyguard is not up yet: switch before it shows, the next screen on corrects it.
@@ -891,9 +897,13 @@ class PlaybackService : Service() {
         val step = Prefs.skipSec(this)
         val b = PlaybackStateCompat.Builder()
             .setState(state, position().toLong(), if (state == PlaybackStateCompat.STATE_PLAYING) speed() else 0f)
-        // In a pocket the lock screen player gets tapped by accident, so while the keyguard is up it has no
-        // buttons and no seek bar; the joystick and headset keys still work (see onMediaButtonEvent).
-        if (!lockScreenMode) {
+        // In a pocket the lock screen player gets tapped by accident, so while the keyguard is up it only
+        // advertises play/pause: the card then shows the playing / paused icon, but its taps are ignored
+        // (fromLockScreen) and there are no other buttons and no seek bar. The joystick and headset keys
+        // still work (see onMediaButtonEvent).
+        if (lockScreenMode) {
+            b.setActions(PlaybackStateCompat.ACTION_PLAY_PAUSE)
+        } else {
             b.setActions(actions)
                 .addCustomAction(
                     PlaybackStateCompat.CustomAction.Builder(ACTION_REWIND, getString(R.string.rewind_n, step), R.drawable.ic_replay).build()
