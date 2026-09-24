@@ -57,6 +57,10 @@ With the display **fully off** Android hands the stick to no app, so light up th
 first (Power / Menu). The Accessibility service only looks at the five stick keys and never logs
 key presses.
 
+The media card on the lock screen shows what is playing but has **no buttons and no seek bar**, so
+taps in a pocket can't skip or pause. The stick, headset and media keys still work, and the full
+controls are back in the notification shade as soon as the phone is unlocked.
+
 If only one of JoyBook / [JoyAmp](https://github.com/alexbeatnik/JoyAmp) has its joystick service
 enabled, that service also drives whatever the other app is playing through standard media keys
 (Left / Right = previous / next, OK = play / pause), so the stick never ends up scrolling the lock

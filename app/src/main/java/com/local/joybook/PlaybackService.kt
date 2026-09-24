@@ -1,5 +1,6 @@
 package com.local.joybook
 
+import android.app.KeyguardManager
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -64,6 +65,11 @@ class PlaybackService : Service() {
         private const val SMART_REWIND_MS = 5_000
         private const val FADE_STEPS = 10
         private const val FADE_STEP_MS = 400L
+        private val LOCKED_MEDIA_KEYS = setOf(
+            KeyEvent.KEYCODE_MEDIA_PLAY, KeyEvent.KEYCODE_MEDIA_PAUSE, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE,
+            KeyEvent.KEYCODE_HEADSETHOOK, KeyEvent.KEYCODE_MEDIA_STOP,
+            KeyEvent.KEYCODE_MEDIA_FAST_FORWARD, KeyEvent.KEYCODE_MEDIA_REWIND,
+        )
 
         private val AUDIO_ATTRS: AudioAttributes = AudioAttributes.Builder()
             .setUsage(AudioAttributes.USAGE_MEDIA)
@@ -211,6 +217,12 @@ class PlaybackService : Service() {
         }
     }
 
+    /** Keyguard is up: the lock screen player gets no touch controls (see updatePlaybackState). */
+    private var lockScreenMode = false
+    private val screenReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) = updateLockScreenMode(intent.action)
+    }
+
     override fun onCreate() {
         super.onCreate()
         instance = this
@@ -223,6 +235,18 @@ class PlaybackService : Service() {
             .setWillPauseWhenDucked(true)
             .build()
         createChannel()
+        lockScreenMode = isLocked()
+        ContextCompat.registerReceiver(
+            this, screenReceiver,
+            IntentFilter().apply {
+                addAction(Intent.ACTION_SCREEN_OFF)
+                addAction(Intent.ACTION_SCREEN_ON)
+                addAction(Intent.ACTION_USER_PRESENT)
+            },
+            // USER_PRESENT comes from SystemUI, not the system, so a not-exported receiver misses it.
+            // All three are protected broadcasts: no other app can send them.
+            ContextCompat.RECEIVER_EXPORTED
+        )
 
         val mediaButtonIntent = PendingIntent.getBroadcast(
             this, 0,
@@ -257,6 +281,20 @@ class PlaybackService : Service() {
                         }
                         return true
                     }
+                    // The default handler obeys only the actions the playback state advertises, and on the
+                    // lock screen it advertises none: keep headset keys and the keys JoyAmp forwards working.
+                    if (lockScreenMode && ke != null && ke.keyCode in LOCKED_MEDIA_KEYS) {
+                        if (ke.action == KeyEvent.ACTION_DOWN && ke.repeatCount == 0) {
+                            when (ke.keyCode) {
+                                KeyEvent.KEYCODE_MEDIA_PLAY -> play()
+                                KeyEvent.KEYCODE_MEDIA_PAUSE, KeyEvent.KEYCODE_MEDIA_STOP -> pause()
+                                KeyEvent.KEYCODE_MEDIA_FAST_FORWARD -> skipForward()
+                                KeyEvent.KEYCODE_MEDIA_REWIND -> skipBack()
+                                else -> toggle()
+                            }
+                        }
+                        return true
+                    }
                     return super.onMediaButtonEvent(intent)
                 }
             })
@@ -273,6 +311,20 @@ class PlaybackService : Service() {
     } else {
         @Suppress("DEPRECATION")
         intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT)
+    }
+
+    private fun isLocked() = getSystemService(KeyguardManager::class.java)?.isKeyguardLocked == true
+
+    private fun updateLockScreenMode(action: String?) {
+        // At screen off the keyguard is not up yet: switch before it shows, the next screen on corrects it.
+        val locked = when (action) {
+            Intent.ACTION_SCREEN_OFF -> true
+            Intent.ACTION_USER_PRESENT -> false
+            else -> isLocked()
+        }
+        if (locked == lockScreenMode) return
+        lockScreenMode = locked
+        updatePlaybackState()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -837,9 +889,12 @@ class PlaybackService : Service() {
             PlaybackStateCompat.ACTION_REWIND or
             PlaybackStateCompat.ACTION_STOP
         val step = Prefs.skipSec(this)
-        session.setPlaybackState(
-            PlaybackStateCompat.Builder()
-                .setActions(actions)
+        val b = PlaybackStateCompat.Builder()
+            .setState(state, position().toLong(), if (state == PlaybackStateCompat.STATE_PLAYING) speed() else 0f)
+        // In a pocket the lock screen player gets tapped by accident, so while the keyguard is up it has no
+        // buttons and no seek bar; the joystick and headset keys still work (see onMediaButtonEvent).
+        if (!lockScreenMode) {
+            b.setActions(actions)
                 .addCustomAction(
                     PlaybackStateCompat.CustomAction.Builder(ACTION_REWIND, getString(R.string.rewind_n, step), R.drawable.ic_replay).build()
                 )
@@ -849,9 +904,8 @@ class PlaybackService : Service() {
                 .addCustomAction(
                     PlaybackStateCompat.CustomAction.Builder(ACTION_CLOSE, getString(R.string.close), R.drawable.ic_close).build()
                 )
-                .setState(state, position().toLong(), if (state == PlaybackStateCompat.STATE_PLAYING) speed() else 0f)
-                .build()
-        )
+        }
+        session.setPlaybackState(b.build())
     }
 
     override fun onDestroy() {
@@ -860,6 +914,7 @@ class PlaybackService : Service() {
         releasePlayer()
         abandonFocus()
         updateNoisyReceiver()
+        try { unregisterReceiver(screenReceiver) } catch (_: Exception) {}
         session.release()
         BookData.removeListener(bookDataListener)
         handler.removeCallbacksAndMessages(null)
