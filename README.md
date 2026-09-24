@@ -57,6 +57,11 @@ With the display **fully off** Android hands the stick to no app, so light up th
 first (Power / Menu). The Accessibility service only looks at the five stick keys and never logs
 key presses.
 
+If only one of JoyBook / [JoyAmp](https://github.com/alexbeatnik/JoyAmp) has its joystick service
+enabled, that service also drives whatever the other app is playing through standard media keys
+(Left / Right = previous / next, OK = play / pause), so the stick never ends up scrolling the lock
+screen's media carousel. The player shows a warning while JoyBook's own service is off.
+
 Some Unisoc builds drop Accessibility services after an update, and force-stopping an app always
 disables its service. JoyBook can re-enable itself if you grant it permission to write secure
 settings once:

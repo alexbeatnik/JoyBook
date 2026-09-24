@@ -656,7 +656,9 @@ class MainActivity : AppCompatActivity() {
         val touch = !Prefs.ignoreTouch(this)
         rowTouch.setToggle(touch)
         rowTouch.setSubtitle(getString(if (touch) R.string.touch_on else R.string.touch_off))
-        rowJoystick.setBadge(A11yBootstrap.isEnabled(this))
+        val joystickOn = A11yBootstrap.isEnabled(this)
+        rowJoystick.setBadge(joystickOn)
+        findViewById<View>(R.id.a11yWarning).visibility = if (joystickOn) View.GONE else View.VISIBLE
         if (pager.displayedChild == PAGE_PLAYER) setHints(PAGE_PLAYER) // skip step may have changed
     }
 
